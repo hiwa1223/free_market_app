@@ -116,3 +116,5 @@ t.string  :category,
 ### Association
 - has_many :products
   
+
+<!-- フォークテスト -->
