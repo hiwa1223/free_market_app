@@ -1,29 +1,25 @@
 require "rails_helper"
 
-describe "UserFeature" do
+# 
 
-  describe "facebook連携でサインアップする" do
+require "rails_helper"
 
+describe "SNSFeature" do
+  describe "Google認証" do
     before do
-      OmniAuth.config.mock_auth[:facebook] = nil
-      Rails.application.env_config['omniauth.auth'] = facebook_mock
-      visit new_user_session_path
+      OmniAuth.config.mock_auth[:google_oauth2] = nil
+      Rails.application.env_config['omniauth.auth'] = google_mock
+      visit user_top_signup_index_path
     end
 
-    # it "サインアップするとユーザーが増える" do
-    #   expect{
-    #     click_link "Facebookでログイン"
-    #   }.to change(User, :count).by(1)
-    # end
-
-    it "すでに連携されたユーザーがサインアップしようとするとユーザーは増えない" do
-      click_link "Facebookでログイン"
-      
-      click_link destroy_user_session_path
-      click_link "ログイン"
-      expect{
-        click_link "Facebookでログイン"
-      }.not_to change(User, :count)
+    it "「Googleで登録」を押すと適切な登録画面が表示される" do
+      click_link "Googleで登録"
+      expect(page).to have_content '会員情報入力'
+      # nickname及びemailは入力済みになる
+      expect(find_field(id: 'user_nickname').value).not_to eq ""
+      expect(find_field(id: 'user_email').value).not_to eq ""
+      # パスワード入力欄は表示されなくなる
+      expect(page).not_to have_content 'パスワード'
     end
   end
 end
