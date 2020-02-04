@@ -47,10 +47,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'capybara'
+  gem 'faker', "~> 2.8"
 end
 
 group :test do
-gem 'faker', "~> 2.8"
 end
 
 group :development do
